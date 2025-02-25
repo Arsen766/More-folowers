@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Form Data via Email</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h2>Contact Form</h2>
+    <form id="contactForm">
+        <label for="name">Login</label>
+        <input type="text" id="name" name="name" required><br><br>
+        
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required><br><br>
+        
+        <button type="submit">Send</button>
+    </form>
+    
+    <script>
+        document.getElementById("contactForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+            
+            const formData = {
+                name: document.getElementById("name").value,
+                email: document.getElementById("password").value
+            };
+            
+            const response = await fetch("http://localhost:3000/send-email", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData)
+            });
+            
+            if (response.ok) {
+                alert("Email sent successfully!");
+            } else {
+                alert("Error sending email.");
+            }
+        });
+    </script>
+</body>
+</html>
